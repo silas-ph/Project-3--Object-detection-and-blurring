@@ -1,4 +1,7 @@
 Reducing the timeframe to 4 weeks for a beta model requires focusing on the most critical tasks, simplifying processes, and leveraging pre-trained models to speed up development. Here's an accelerated project outline:
+### Image dataset resources
+-**https://www.kaggle.com/datasets/robinreni/house-rooms-image-dataset
+
 
 ### Accelerated Project Outline for Image Classification and Object Blurring (4 Weeks)
 
