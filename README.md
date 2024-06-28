@@ -59,7 +59,7 @@ Hugging Face is a company that provides tools and models for natural language pr
   - **YOLO**: Known for its speed and efficiency in real-time object detection.
   - **Hugging Face**: May not be as fast as YOLO for real-time detection, but excels in providing versatile and powerful pre-trained models for various tasks.
 
-### Use Case: Identifying Pictures on Walls
+### Business Problem Case: Using images of interior rooms, and then identifying pictures, diplomas or other personally identifying objects.  Once identified, then the selected objects will be blurred.
 
 **Using YOLO:**
 1. **Dataset Preparation**: Annotate images with bounding boxes around pictures on the walls.
