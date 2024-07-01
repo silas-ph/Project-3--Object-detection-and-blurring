@@ -1,6 +1,14 @@
 
 ### Image dataset resources
--**https://www.kaggle.com/datasets/robinreni/house-rooms-image-dataset
+-**[https://www.kaggle.com/datasets/robinreni/house-rooms-image-dataset](https://universe.roboflow.com/ibee/house-tfo7u/browse?queryText=&pageSize=50&startingIndex=0&browseQuery=true)
+
+-**https://images.cv/dataset/pill-bottle-image-classification-dataset
+
+Business Problem: 
+MVP- Videos captured by insureds will have sensitive and personally identifiable information.  The goal is to indentify geometric shapes on walls (pictures, deplomas, art work) and then blurr each one.  The second objective is to identify prescription pill bottles and then blur them.
+
+Stretch Goals:  Process vidoes and convert the videos into pictures, apply the blurring and then combine the blurred images with the 3D model of each room.
+
 
 To create a system for image identification and blurring, we will need to combine several machine learning technologies and algorithms. Below are the key components and machine learning technologies required for this project:
 
@@ -78,7 +86,7 @@ To create a system for image identification and blurring, we will need to combin
 - **Description**: A simple and standalone manual annotation software for image, audio, and video.
 - **Usage**: Annotating images with bounding boxes or segmentation masks.
 
-### Example Workflow
+
 
 1. **Data Collection and Annotation**:
    - Collect a dataset of images of interior rooms.
@@ -205,9 +213,4 @@ The technologies and algorithms required for an image identification and blurrin
 - **Annotation Tool**: LabelImg is chosen for its simplicity and speed in annotating images.
 - **Pre-trained Models**: Leveraging pre-trained models significantly reduces training time.
 - **Cloud Resources**: Using Azure's GPU instances for training to speed up the process.
-
-### Clarifying Questions:
-1. **Video Resolution**: Are we agreed on 1080p as the resolution for video captures?
-2. **Pre-trained Models**: Are there any specific pre-trained models you prefer to use?
-3. **Data Availability**: Do we have any pre-labeled datasets that we can leverage to save time?
 
