@@ -1,10 +1,15 @@
 ### Elevator Pitch
 
-Imagine a world where privacy is seamlessly integrated into every aspect of your life, especially in shared spaces. With our cutting-edge AI object detection technology, we bring that vision to reality by ensuring your personal moments remain private, even in public settings.
+**Protecting Privacy in Insurance Claims with Advanced AI**
 
-Our innovative solution utilizes advanced AI algorithms to detect pictures and photos on walls in real-time. Whether it's during a video call, a virtual tour, or any form of digital media, our technology identifies these images and intelligently blurs them, safeguarding your privacy and that of others.
+Imagine a world where your privacy is seamlessly integrated into every aspect of your life, especially in shared spaces. Our groundbreaking AI object detection technology makes this vision a reality by ensuring that your personal moments stay private, even in public settings.
 
-No longer worry about sensitive information or personal photos being inadvertently shared. Our system is designed to be fast, efficient, and unobtrusive, providing peace of mind without disrupting your daily activities. Embrace a future where privacy is prioritized and effortlessly maintained with our AI-powered image blurring technology.
+Our cutting-edge solution leverages advanced AI algorithms to identify and blur pictures on walls from uploaded videos. This intuitive user interface allows for effortless video uploads, and our intelligent technology detects and blurs sensitive images, safeguarding your privacy and that of others.
+
+No longer worry about inadvertently sharing sensitive information or personal photos. Our system is designed to be fast, efficient, and unobtrusive, giving you peace of mind without disrupting your daily activities. Embrace a future where privacy is prioritized and effortlessly maintained with our AI-powered image blurring technology.
+
+Join us in redefining privacy protection for insurance claims and beyond.
+
 
 
 
