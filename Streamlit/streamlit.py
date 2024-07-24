@@ -3,6 +3,7 @@ from PIL import Image, ImageFilter
 import cv2
 import tempfile
 import os
+from multiprocessing import Pool, cpu_count
 
 # Dummy model function - replace with your actual model
 def run_model(input_image):
@@ -13,6 +14,7 @@ def run_model(input_image):
 def video_to_frames(video_path, frames_dir):
     cap = cv2.VideoCapture(video_path)
     frame_count = 0
+    frame_paths = []
     
     while True:
         ret, frame = cap.read()
@@ -20,12 +22,43 @@ def video_to_frames(video_path, frames_dir):
             break
         frame_path = os.path.join(frames_dir, f'frame_{frame_count:04d}.jpg')
         cv2.imwrite(frame_path, frame)
+        frame_paths.append(frame_path)
         frame_count += 1
     
     cap.release()
-    return frame_count
+    return frame_paths
 
-def frames_to_video(frames_dir, output_video_path, fps):
+def frame_extraction_worker(params):
+    frame, frames_dir, count = params
+    frame_path = os.path.join(frames_dir, f'frame_{count:04d}.jpg')
+    cv2.imwrite(frame_path, frame)
+    return frame_path
+
+def video_to_frames_parallel(video_path, frames_dir):
+    cap = cv2.VideoCapture(video_path)
+    frames = []
+    frame_count = 0
+    
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            break
+        frames.append((frame, frames_dir, frame_count))
+        frame_count += 1
+    
+    cap.release()
+    
+    with Pool(processes=cpu_count()) as pool:
+        frame_paths = pool.map(frame_extraction_worker, frames)
+    
+    return frame_paths
+
+def frames_to_video_worker(params):
+    frame_file, frames_dir = params
+    frame_path = os.path.join(frames_dir, frame_file)
+    return cv2.imread(frame_path)
+
+def frames_to_video_parallel(frames_dir, output_video_path, fps):
     frame_files = sorted([f for f in os.listdir(frames_dir) if f.endswith('.jpg') or f.endswith('.png')])
     if not frame_files:
         raise ValueError("No frames found in the directory")
@@ -40,11 +73,13 @@ def frames_to_video(frames_dir, output_video_path, fps):
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
     video_writer = cv2.VideoWriter(output_video_path, fourcc, fps, (width, height))
     
-    for frame_file in frame_files:
-        frame_path = os.path.join(frames_dir, frame_file)
-        frame = cv2.imread(frame_path)
+    frame_paths = [(frame_file, frames_dir) for frame_file in frame_files]
+    
+    with Pool(processes=cpu_count()) as pool:
+        frames = pool.map(frames_to_video_worker, frame_paths)
+    
+    for frame in frames:
         if frame is None:
-            print(f"Warning: Could not read frame from {frame_path}")
             continue
         video_writer.write(frame)
     
@@ -54,6 +89,10 @@ def process_frame(frame_path):
     frame = Image.open(frame_path)
     processed_frame = run_model(frame)
     processed_frame.save(frame_path)
+
+def process_frames_parallel(frame_paths):
+    with Pool(processes=cpu_count()) as pool:
+        pool.map(process_frame, frame_paths)
 
 def streamlit_app():
     st.title("Video Processing App")
@@ -68,18 +107,17 @@ def streamlit_app():
         frames_dir = tempfile.mkdtemp()
         
         st.write("Extracting frames...")
-        frame_count = video_to_frames(video_path, frames_dir)
-        st.write(f"Extracted {frame_count} frames.")
+        frame_paths = video_to_frames_parallel(video_path, frames_dir)
+        st.write(f"Extracted {len(frame_paths)} frames.")
         
         st.write("Processing frames...")
-        for frame_file in os.listdir(frames_dir):
-            process_frame(os.path.join(frames_dir, frame_file))
+        process_frames_parallel(frame_paths)
         st.write("Frames processed.")
         
         output_video_path = os.path.join(frames_dir, 'output_video.mp4')
         st.write("Reassembling video...")
         try:
-            frames_to_video(frames_dir, output_video_path, fps=30)
+            frames_to_video_parallel(frames_dir, output_video_path, fps=30)
             st.write("Video reassembled.")
             
             with open(output_video_path, 'rb') as f:
