@@ -1,98 +1,107 @@
 import streamlit as st
-from PIL import Image, ImageFilter
 import cv2
 import tempfile
-import os
-from multiprocessing import Pool, cpu_count
+import numpy as np
+from ultralytics import YOLO
+from pathlib import Path
 
-# Dummy model function - replace with your actual model
-def run_model(input_image):
-    # For demonstration, we will just apply a filter to the image
-    output_image = input_image.filter(ImageFilter.SMOOTH)
-    return output_image
+# Define the path to your model using pathlib
+model_path = Path("best.pt")
 
-def video_to_frames(video_path, frames_dir):
-    cap = cv2.VideoCapture(video_path)
-    frame_count = 0
-    frame_paths = []
-    
-    while True:
-        ret, frame = cap.read()
-        if not ret:
-            break
-        frame_path = os.path.join(frames_dir, f'frame_{frame_count:04d}.jpg')
-        cv2.imwrite(frame_path, frame)
-        frame_paths.append(frame_path)
-        frame_count += 1
-    
-    cap.release()
-    return frame_paths
+# Load YOLO model
+model = YOLO(model_path)
 
-def frame_extraction_worker(params):
-    frame, frames_dir, count = params
-    frame_path = os.path.join(frames_dir, f'frame_{count:04d}.jpg')
-    cv2.imwrite(frame_path, frame)
-    return frame_path
+def draw_bounding_boxes(frame, boxes):
+    for box in boxes:
+        x1, y1, x2, y2 = map(int, box)
+        cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
+    return frame
 
-def video_to_frames_parallel(video_path, frames_dir):
-    cap = cv2.VideoCapture(video_path)
-    frames = []
-    frame_count = 0
-    
-    while True:
-        ret, frame = cap.read()
-        if not ret:
-            break
-        frames.append((frame, frames_dir, frame_count))
-        frame_count += 1
-    
-    cap.release()
-    
-    with Pool(processes=cpu_count()) as pool:
-        frame_paths = pool.map(frame_extraction_worker, frames)
-    
-    return frame_paths
+def blur_objects(frame, boxes):
+    for box in boxes:
+        x1, y1, x2, y2 = map(int, box)
+        # Ensure the coordinates are within the frame dimensions
+        x1, y1, x2, y2 = max(0, x1), max(0, y1), min(frame.shape[1], x2), min(frame.shape[0], y2)
+        if x1 < x2 and y1 < y2:  # Check if the coordinates are valid
+            roi = frame[y1:y2, x1:x2]
+            blurred_roi = cv2.GaussianBlur(roi, (51, 51), 30)
+            frame[y1:y2, x1:x2] = blurred_roi
+    return frame
 
-def frames_to_video_worker(params):
-    frame_file, frames_dir = params
-    frame_path = os.path.join(frames_dir, frame_file)
-    return cv2.imread(frame_path)
+def initialize_tracker(frame, box):
+    tracker = cv2.legacy.TrackerCSRT_create()
+    x1, y1, x2, y2 = map(int, box)
+    tracker.init(frame, (x1, y1, x2 - x1, y2 - y1))
+    return tracker
 
-def frames_to_video_parallel(frames_dir, output_video_path, fps):
-    frame_files = sorted([f for f in os.listdir(frames_dir) if f.endswith('.jpg') or f.endswith('.png')])
-    if not frame_files:
-        raise ValueError("No frames found in the directory")
+def update_trackers(frame, trackers):
+    boxes = []
+    for tracker in trackers:
+        success, bbox = tracker.update(frame)
+        if success:
+            x1, y1, w, h = map(int, bbox)
+            x2, y2 = x1 + w, y1 + h
+            boxes.append((x1, y1, x2, y2))
+    return boxes
 
-    first_frame_path = os.path.join(frames_dir, frame_files[0])
-    first_frame = cv2.imread(first_frame_path)
-    if first_frame is None:
-        raise ValueError(f"Could not read the first frame from {first_frame_path}")
-        
-    height, width, layers = first_frame.shape
-    
+def process_video(input_video_path, output_video_path, model, reinit_interval=5):
+    # Open the video file
+    cap = cv2.VideoCapture(input_video_path)
+
+    # Get video properties
+    width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    fps = int(cap.get(cv2.CAP_PROP_FPS))
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-    video_writer = cv2.VideoWriter(output_video_path, fourcc, fps, (width, height))
-    
-    frame_paths = [(frame_file, frames_dir) for frame_file in frame_files]
-    
-    with Pool(processes=cpu_count()) as pool:
-        frames = pool.map(frames_to_video_worker, frame_paths)
-    
-    for frame in frames:
-        if frame is None:
-            continue
-        video_writer.write(frame)
-    
-    video_writer.release()
+    out = cv2.VideoWriter(output_video_path, fourcc, fps, (width, height))
 
-def process_frame(frame_path):
-    frame = Image.open(frame_path)
-    processed_frame = run_model(frame)
-    processed_frame.save(frame_path)
+    # Initialize variables
+    trackers = []
+    frame_count = 0
 
-def process_frames_parallel(frame_paths):
-    with Pool(processes=cpu_count()) as pool:
-        pool.map(process_frame, frame_paths)
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            break
+
+        if frame_count % reinit_interval == 0:  # Check for new detections every reinit_interval frames
+            results = model(frame)
+            detections = results[0].boxes.xyxy.cpu().numpy()
+            confidences = results[0].boxes.conf.cpu().numpy()
+            
+            # Filter detections by confidence score
+            valid_detections = [det for det, conf in zip(detections, confidences) if conf > 0.3]
+
+            # Add new trackers for new detections
+            for det in valid_detections:
+                if all(np.linalg.norm(det - np.array(box)) > 50 for box in [tracker[1] for tracker in trackers]):  # Avoid duplicate detections
+                    tracker = initialize_tracker(frame, det)
+                    trackers.append((tracker, det))
+
+        # Update trackers
+        updated_boxes = []
+        for tracker, box in trackers:
+            success, bbox = tracker.update(frame)
+            if success:
+                x1, y1, w, h = map(int, bbox)
+                x2, y2 = x1 + w, y1 + h
+                updated_boxes.append((x1, y1, x2, y2))
+            else:
+                trackers.remove((tracker, box))  # Remove failed trackers
+
+        # Draw bounding boxes for visualization
+        frame_with_boxes = draw_bounding_boxes(frame.copy(), updated_boxes)
+
+        # Apply blurring
+        frame_with_blur = blur_objects(frame_with_boxes, updated_boxes)
+
+        # Write the frame to the output video
+        out.write(frame_with_blur)
+
+        frame_count += 1
+
+    cap.release()
+    out.release()
 
 def streamlit_app():
     st.title("Video Processing App")
@@ -102,29 +111,18 @@ def streamlit_app():
     if uploaded_file is not None:
         tfile = tempfile.NamedTemporaryFile(delete=False)
         tfile.write(uploaded_file.read())
-        video_path = tfile.name
+        video_path = Path(tfile.name)
         
-        frames_dir = tempfile.mkdtemp()
+        output_path = video_path.with_suffix('.output.mp4')
+
+        st.write("Loading YOLO model...")
         
-        st.write("Extracting frames...")
-        frame_paths = video_to_frames_parallel(video_path, frames_dir)
-        st.write(f"Extracted {len(frame_paths)} frames.")
+        st.write("Processing video...")
+        process_video(video_path, str(output_path), model)
+        st.write("Video processed.")
         
-        st.write("Processing frames...")
-        process_frames_parallel(frame_paths)
-        st.write("Frames processed.")
-        
-        output_video_path = os.path.join(frames_dir, 'output_video.mp4')
-        st.write("Reassembling video...")
-        try:
-            frames_to_video_parallel(frames_dir, output_video_path, fps=30)
-            st.write("Video reassembled.")
-            
-            with open(output_video_path, 'rb') as f:
-                st.download_button(label="Download Processed Video", data=f, file_name="processed_video.mp4", mime="video/mp4")
-                
-        except ValueError as e:
-            st.error(f"Error: {e}")
+        with open(output_path, 'rb') as f:
+            st.download_button(label="Download Processed Video", data=f, file_name="processed_video.mp4", mime="video/mp4")
 
 if __name__ == '__main__':
     streamlit_app()
