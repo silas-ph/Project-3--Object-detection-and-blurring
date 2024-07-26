@@ -1,0 +1,61 @@
+﻿model,# images,train,train-background,valid,valid-background,test,test-background,optimizer,cache,epochs,imgsz,batch,patience,iou,task,single_cls,show_labels,folder,weights,Roboflow version,Augmentations,Notes
+yolov8m,1487,1041,,258,,188,,AdamW,FALSE,10,224,16,100,0.7,detect,FALSE,TRUE,Medium_model_1,0,Project-3-2,None,>1 class
+yolov8m,1487,1041,,258,,188,,AdamW,FALSE,100,224,16,100,0.7,detect,FALSE,TRUE,Mediaum_model_2,0,Project-3-2,None,"Continue previous medium run for total 110 epochs
+>1 class"
+yolov8m,1487,1041,,258,,188,,AdamW,FALSE,10,224,16,100,0.7,detect,FALSE,TRUE,Medium_model_3,0,Project-3-2,None,"Continue previous medium run for total 120 epochs
+>1 class"
+yolov8x,1487,1041,,258,,188,,AdamW,FALSE,10,224,16,100,0.7,detect,FALSE,TRUE,XL-1,0,Project-3-2,None,>1 class
+yolov8x,1487,1041,,258,,188,,AdamW,FALSE,100,224,16,100,0.7,detect,FALSE,TRUE,XL-2,0,Project-3-2,None,"Continue previous medium run for total 110 epochs
+>1 class"
+yolov8m,3415,2390,690,602,169,423,126,AdamW,FALSE,10,224,16,100,0.7,detect,FALSE,TRUE,Medium_3415im_10ep,0,Project-3-3,None,>1 class
+yolov8m,3415,2390,690,602,169,423,126,AdamW,FALSE,100,224,16,100,0.7,detect,FALSE,TRUE,Medium_3415im_110ep,0,Project-3-3,None,"Continue previous medium run for total 110 epochs
+>1 class"
+yolov8m,8145,7170,2070,602,169,423,126,AdamW,TRUE,300,224,-1,100,0.7,detect,TRUE,TRUE,Medium_8195im_300ep,1,Project-3-4,"Crop: 0-20%
+Rotation: -15-+15º
+Brightness: -15-15%
+Blur: up to 2.5px",>1 class
+yolov8m,8145,7170,2070,602,169,423,126,AdamW,TRUE,300,224,-1,100,0.7,detect,TRUE,TRUE,Medium_8195im_600ep,1,Project-3-4,"Crop: 0-20%
+Rotation: -15-+15º
+Brightness: -15-15%
+Blur: up to 2.5px","Continue previous medium run for total 600 epochs
+>1 class"
+yolov8m,8145,7170,2070,602,169,423,126,AdamW,TRUE,300,224,-1,100,0.7,detect,TRUE,TRUE,Medium_8195im_900ep_abandoned,1,Project-3-4,"Crop: 0-20%
+Rotation: -15-+15º
+Brightness: -15-15%
+Blur: up to 2.5px","Continue previous medium run for total 900 epochs
+>1 class
+Finished early after 100 epochs w/o progress"
+yolov8x,8145,7170,2070,602,169,423,126,AdamW,TRUE,300,224,-1,100,0.7,detect,TRUE,TRUE,XL_8195im_300ep_abandoned,1,,"Crop: 0-20%
+Rotation: -15-+15º
+Brightness: -15-15%
+Blur: up to 2.5px",">1 class
+Finishd early after 100 epochs w/o progress"
+yolov10m,8145,7170,2070,602,169,423,126,AdamW,TRUE,300,224,-1,100,0.7,detect,TRUE,TRUE,V10M_8195im_300ep,1,Project-3-4,"Crop: 0-20%
+Rotation: -15-+15º
+Brightness: -15-15%
+Blur: up to 2.5px",>1 class
+yolov10m,8145,7170,2070,602,169,423,126,AdamW,TRUE,300,224,-1,20,0.4,detect,TRUE,TRUE,V10M_8195im_300ep_04IoU_abandoned,1,Project-3-4,"Crop: 0-20%
+Rotation: -15-+15º
+Brightness: -15-15%
+Blur: up to 2.5px",">1 class
+Finshed early after 20 epochs w/o progress"
+yolov10m,8145,7170,2070,602,169,423,126,AdamW,TRUE,300,224,-1,20,0.5,detect,TRUE,TRUE,V10M_8195im_300ep_05IoU_1cls_abandoned,1,Project-3-5,"Crop: 0-20%
+Rotation: -15-+15º
+Brightness: -15-15%
+Blur: up to 2.5px","1 class
+Finished early after 20 epochs w/o progress"
+yolov10m,8145,7170,2070,602,169,423,126,AdamW,TRUE,300,224,-1,100,0.5,detect,TRUE,TRUE,V10M_8195im_300ep_05IoU_1cls,1,Project-3-5,"Crop: 0-20%
+Rotation: -15-+15º
+Brightness: -15-15%
+Blur: up to 2.5px",1 class
+yolov10m,8145,7170,2070,602,169,423,126,AdamW,TRUE,300,224,-1,100,0.5,detect,TRUE,TRUE,V10M_8195im_600ep_05IoU_1cls,1,Project-3-5,"Crop: 0-20%
+Rotation: -15-+15º
+Brightness: -15-15%
+Blur: up to 2.5px","1 class
+Continue previous medium run for total 600 epochs"
+yolov10m,8145,7170,2070,602,169,423,126,AdamW,TRUE,300,224,-1,100,0.5,detect,TRUE,TRUE,V10M_8195im_900ep_05IoU_1cls_abandoned,1,Project-3-5,"Crop: 0-20%
+Rotation: -15-+15º
+Brightness: -15-15%
+Blur: up to 2.5px","1 class
+Continue previous medium run for total 900 epochs
+Finished early after 100 epochs w/o progress"
