@@ -12,11 +12,11 @@ model_path = Path("best.pt")
 # Load YOLO model
 model = YOLO(model_path)
 
-def draw_bounding_boxes(frame, boxes):
-    for box in boxes:
-        x1, y1, x2, y2 = map(int, box)
-        # cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
-    return frame
+# def draw_bounding_boxes(frame, boxes):
+#     for box in boxes:
+#         x1, y1, x2, y2 = map(int, box)
+#         cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
+#     return frame
 
 def blur_objects(frame, boxes):
     for box in boxes:
@@ -82,8 +82,8 @@ def process_video(input_video_path, output_video_path, model, reinit_interval=5,
             else:
                 trackers.remove((tracker, box))
 
-        frame_with_boxes = draw_bounding_boxes(frame.copy(), updated_boxes)
-        frame_with_blur = blur_objects(frame_with_boxes, updated_boxes)
+        # frame_with_boxes = draw_bounding_boxes(frame.copy(), updated_boxes)
+        frame_with_blur = blur_objects(frame.copy(), updated_boxes)
         out.write(frame_with_blur)
 
         frame_count += 1
