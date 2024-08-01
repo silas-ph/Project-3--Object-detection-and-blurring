@@ -156,9 +156,10 @@ This project demonstrated the successful integration of YOLO object detection wi
 [^11]: Ultralytics (2024). *YOLOv8*. Ultralytics Inc. [Link](https://docs.ultralytics.com/models/yolov8/).
 [^12]: Ultralytics (2024). *YOLOv10*. Ultralytics Inc. [Link](https://docs.ultralytics.com/models/yolov10/).
 
-![Training Interface]('Images\Param runs 5.png')
-![Annotated Image]('Images\Robo 1.png')
-![Dataset Split]('Images\Robo 2.png')
-![Augmented Images]('Images\Robo 3.png')
-![Model Metrics]('Images\Training_logs 4.png')
+![Training Interface](Images/Param%20runs%205.png)
+![Annotated Image](Images/Robo%201.png)
+![Dataset Split](Images/Robo%202.png)
+![Augmented Images](Images/Robo%203.png)
+![Model Metrics](Images/Training_logs%204.png)
+
 
