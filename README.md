@@ -298,25 +298,26 @@ This project not only resulted in a functional privacy-preserving video processi
 Medium.com, ChatGpt, Claude
 
 ## References
-[^1]: Redmon Joseph et al. (2016 May 9). *You Only Look Once: Unified Real-Time Object Detection* Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR) 2016 https://arxiv.org/abs/1506.02640.
-[^2]: Redmon Joseph and Ali Farhadi (2016 December 25). *YOLO9000: Better Faster Stronger* Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR) 2017 https://arxiv.org/abs/1612.08242.
-[^3]: Redmon Joseph and Ali Farhadi (2018 Apr 8). *YOLOv3: An Incremental Improvement* arXiv preprint 2018 https://arxiv.org/abs/1804.02767.
-[^4]: Bochkovskiy Alexey et al. (2020 Apr 23). *YOLOv4: Optimal Speed and Accuracy of Object Detection* arXiv preprint 2020 https://arxiv.org/abs/2004.10934.
-[^5]: Ultralytics (2024) *YOLOv5* Ultralytics Inc. https://docs.ultralytics.com/models/yolov5/ as accessed on 8/1/2024.
-[^6]: Rajput Vishal (2024 May 26). *YOLOv10: Object Detection King Is Back* Medium.com https://medium.com/aiguys/yolov10-object-detection-king-is-back-739eaaab134d accessed on 8/1/2024.  
-[^7]: *Gaussian blur* Wikipedia https://en.wikipedia.org/wiki/Gaussian_blur accessed on 8/1/2024.  
-[^8]: *Streamlit • A faster way to build and share data apps* Snowflake Inc. https://streamlit.io/ accessed on 8/1/2024. 
-[^9]: Reni Robin (2020). *House Rooms Image Dataset* Kaggle https://www.kaggle.com/datasets/robinreni/house-rooms-image-dataset/data accessed on 8/1/2024. License: CC0 1.0 UNIVERSAL Deed.  
-[^10]: *Roboflow: Computer vision tools for developers and enterprises* Roboflow.com https://roboflow.com/ accessed on 8/1/2024.
-[^11]: Ultralytics (2024) *YOLOv8* Ultralytics Inc. https://docs.ultralytics.com/models/yolov8/ as accessed on 8/1/2024.
-[^12]: Ultralytics (2024) *YOLOv10* Ultralytics Inc. https://docs.ultralytics.com/models/yolov10/ as accessed on 8/1/2024.
+[^1]: Redmon, Joseph et al. (2016, May 9). *You Only Look Once: Unified, Real-Time Object Detection*, Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2016, [https://arxiv.org/abs/1506.02640](https://arxiv.org/abs/1506.02640).
+[^2]: Redmon, Joseph and Ali Farhadi (2016, December 25). *YOLO9000: Better, Faster, Stronger*, Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2017, [https://arxiv.org/abs/1612.08242](https://arxiv.org/abs/1612.08242).
+[^3]: Redmon, Joseph and Ali Farhadi (2018, Apr 8). *YOLOv3: An Incremental Improvement*, arXiv preprint, 2018, [https://arxiv.org/abs/1804.02767](https://arxiv.org/abs/1804.02767).
+[^4]: Bochkovskiy, Alexey et al. (2020, Apr 23). *YOLOv4: Optimal Speed and Accuracy of Object Detection*, arXiv preprint, 2020, [https://arxiv.org/abs/2004.10934](https://arxiv.org/abs/2004.10934).
+[^5]: Ultralytics (2024), *YOLOv5*, Ultralytics Inc., [https://docs.ultralytics.com/models/yolov5/](https://docs.ultralytics.com/models/yolov5/) as accessed on 8/1/2024.
+[^6]: Rajput, Vishal (2024, May 26). *YOLOv10: Object Detection King Is Back*, Medium.com, [https://medium.com/aiguys/yolov10-object-detection-king-is-back-739eaaab134d](https://medium.com/aiguys/yolov10-object-detection-king-is-back-739eaaab134d) accessed on 8/1/2024.  
+[^7]: *Gaussian blur*, Wikipedia, [https://en.wikipedia.org/wiki/Gaussian_blur](https://en.wikipedia.org/wiki/Gaussian_blur), accessed on 8/1/2024.  
+[^8]: *Streamlit • A faster way to build and share data apps*, Snowflake Inc., [https://streamlit.io/](https://streamlit.io/) accessed on 8/1/2024. 
+[^9]: Reni, Robin (2020). *House Rooms Image Dataset*, Kaggle, [https://www.kaggle.com/datasets/robinreni/house-rooms-image-dataset/data](https://www.kaggle.com/datasets/robinreni/house-rooms-image-dataset/data) accessed on 8/1/2024. License: CC0 1.0 UNIVERSAL Deed.  
+[^10]: *Roboflow: Computer vision tools for developers and enterprises*, Roboflow.com, [https://roboflow.com/](https://roboflow.com/) accessed on 8/1/2024.
+[^11]: Ultralytics (2024), *YOLOv8*, Ultralytics Inc., [https://docs.ultralytics.com/models/yolov8/](https://docs.ultralytics.com/models/yolov8/) as accessed on 8/1/2024.
+[^12]: Ultralytics (2024), *YOLOv10*, Ultralytics Inc., [https://docs.ultralytics.com/models/yolov10/](https://docs.ultralytics.com/models/yolov10/) as accessed on 8/1/2024.
 
-YOLO: AGPL-3.0 License: This OSI-approved open-source license is ideal for students and enthusiasts promoting open collaboration and knowledge sharing. 
-@article{THU-MIGyolov10
-  title={YOLOv10: Real-Time End-to-End Object Detection}
-  author={Ao Wang Hui Chen Lihao Liu et al.}
-  journal={arXiv preprint arXiv:2405.14458}
-  year={2024}
-  institution={Tsinghua University}
+YOLO: AGPL-3.0 License: This OSI-approved open-source license is ideal for students and enthusiasts, promoting open collaboration and knowledge sharing. 
+@article{THU-MIGyolov10,
+  title={YOLOv10: Real-Time End-to-End Object Detection},
+  author={Ao Wang, Hui Chen, Lihao Liu, et al.},
+  journal={arXiv preprint arXiv:2405.14458},
+  year={2024},
+  institution={Tsinghua University},
   license = {AGPL-3.0}
 }
+
