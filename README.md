@@ -37,7 +37,7 @@
 13. [References](#references)
 
 ## Executive Summary
-We trained a YOLO (You Look Only Once) AI model[^1,^2,^3,^4,^5,^6] to successfully detect picture objects with bounding boxes in images. We applied the YOLO model to videos to detect these objects and blurred them using a Gaussian Blur[^7] algorithm. We built a web application using Streamlit[^8] allowing users to upload their own videos for processing and download the processed video.
+We trained a YOLO (You Look Only Once) AI model[^1],[^2],[^3],[^4],[^5],[^6] to successfully detect picture objects with bounding boxes in images. We applied the YOLO model to videos to detect these objects and blurred them using a Gaussian Blur[^7] algorithm. We built a web application using Streamlit[^8] allowing users to upload their own videos for processing and download the processed video.
 
 This application is intended for users who want to de-identify objects in videos before publishing them to a (semi-)public audience.
 
