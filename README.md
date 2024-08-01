@@ -1,6 +1,3 @@
-To keep a table of contents in a markdown file, you can create a list with links to the various sections of your document. Here’s how you can format your document in markdown with a table of contents:
-
-```markdown
 # Video Processing with YOLO and Streamlit for Privacy-Preserving Object Detection
 
 ## Table of Contents
@@ -164,6 +161,4 @@ This project demonstrated the successful integration of YOLO object detection wi
 ![Dataset Split](path_to_image3.png)
 ![Augmented Images](path_to_image4.png)
 ![Model Metrics](path_to_image5.png)
-```
 
-Make sure to replace `path_to_imageX.png` with the actual paths to your images if they are stored in your GitHub repository. The links in the Table of Contents will automatically direct the reader to the respective sections when clicked.
