@@ -160,6 +160,8 @@ We chose these particular metrics because YOLO provides them after each epoch.
 
 The following table shows these metrics for the runs for which we preserved the best parameters of the run:
 
+![Training Interface](Images/Param%20runs%205.png)
+
 ### Hyperparameter Tuning
 We adjusted the epoch, batch size, patience, and IoU (Intersection over Union) hyperparameters. To view the hyperparameters of the model we chose for video processing, please reference [args.yaml](https://github.com/silas-ph/Project-3--Object-detection-and-blurring/blob/main/Runs/V10M_8195im_600ep_05IoU_1cls/args.yaml).
 
